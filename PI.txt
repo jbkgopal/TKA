@@ -1,0 +1,25 @@
+**** Basic Interview questions in core java ****** 
+
+1.What is Data Types in java?
+2.Why we Use Variable in java?
+3.Which Type of Variable in java?
+4.What is Scanner in java?
+5.What is Difference between local variable and global variable in java?
+6.Why we use comments in java?
+7.How Many Types of variable in java?
+8.What is class in java?
+9.What is Object in java?
+10.Types of Access Modifier in java?
+11.Why we use public keyword in java?
+12.When we use private keyword in java?
+13.What is OOP’s In java?
+14.Types of Piller in java?
+15.What is Encapsulation in java?
+16.Why we use in Object in java?
+17.What is single line comments in java?
+18.Types of Comment in java?
+19.How to create a class in java?
+20.How to create a object in java?
+
+Thank You
+Gopal

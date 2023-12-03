@@ -1,0 +1,303 @@
+Spring Core related Annotations:
+
+@Bean — method annotated with @Bean creates and returns Bean. Spring Container calls such methods, automatically.
+
+@PostConstruct & @PreDestroy — indicates Bean life cycle methods
+
+@Configuration — Class annotated with @Configuration has methods annotated with @Bean or has data members annotated with @Value
+
+@
+Scope
+ — indicates Scope of a Bean such as Singleton, Prototype, Session, etc…
+
+@Lazy — indicates that Bean needs to be created on Demand only, i..e when there is explicit request
+
+@Autowired — indicates Bean needs to be automatically created by Spring Container.
+
+class EmployeeController{
+
+@Autowired
+EmployeeService eService;
+
+//Remaining code which directly uses eService, as it's automatically created using Autowired
+}
+@Qualifier — used along with @Bean or @Autowired to avoid ambiguity during Bean creation by Spring Container
+
+@Primary — When there are multiple qualified Beans, priority is given to the Bean annotated with @Primary
+
+@Component — indicates a class as Component, so that it can be recognized by @ComponentScan, automatically. As known, all Component classes are automatically scanned and loaded by Spring Container.
+
+@ComponentScan — scans one or more packages/subpackages for Components. This annotation is part of @SpringBootApplication, however it may be used separately as well.
+
+@Service — Components in Service Layer need to be annotated with @Service
+
+@Service
+public class EmployeeService{
+  //define methods exposed by the Service Layer
+}
+@Repository — Components in Repository Layer need to be annotated with @Repository
+
+@SpringBootApplication — This annotation is used with main class of Spring Boot Application. @SpringBootApplication is combination of @ComponentScan, @EnableAutoConfiguration and @Configuration
+
+@Value — Data members of a Configuration class are automatically loaded from Configuration file(such as application.properties) or initialized to a specific value, as shown below.
+
+@Service
+public class EmployeeService{
+
+//cname property is automatically retrieved from application.properties file
+@Value("${cname}")
+private String company_name;
+
+//initialize tax_id with ABCDEF123
+@Value("ABCDEF123")
+private String tax_id;
+
+//methods which uses above fields...
+
+}
+@ConfigurationProperties — Class annotated with @ConfigurationProperties automatically loads bunch of data members(with matching property names)from Configuration file(such as application.properties), as shown below
+
+@Component
+@ConfigurationProperties
+public class CompanyDetails{
+
+  private String company_name;
+  private String company_ceo;
+  private String head_office_city;
+  
+  //methods defined by this class...
+}
+#contents of application.properties file
+company_name = WXYZ Company 
+company_ceo = Some One
+head_office_city = Bangalore
+#other configuration properties can be specified here
+@PropertySource — Class Level Annotation, generally along with @Configuration annotation. @PropertySource lets developers to specify custom Property file name(s)(other than application.properties), from which Configuration properties can be loaded, in runtime, as shown below
+
+@Configuration
+@PropertySource("classpath:myfilename.properties")
+class SomeConfigurations{
+  //Spring Boot automatically looks for myfile.properties file, for required Configuration properties
+}
+@Profile — can be used with Configuration or Component classes, to indicate this specific class is available, when application is running in specific profile mode, such as dev, test or production
+
+REST API related Annotations:
+
+@RestController — Class annotated with @RestController exposes REST End points, as shown below
+
+@RestController
+class EmployeeController{
+@GetMapping("/allemployees")
+List<Employee> getEmployees(){
+//return List of Employees
+}
+//More REST end points can be exposed
+}
+@RequestBody — used with method parameter of REST end point. This annotation automatically deserializes the body(of Http request) into a Model or Entity object.
+
+@RestController
+class EmployeeController{
+@PostMapping("/create")
+ResponseEntity<Employee> createEmployee(@RequestBody Employee emp){
+//code to save emp object in DB
+}
+//other REST end points
+}
+@PathVariable — used with method parameter of REST end point. It automatically retrieves a Path variable into the method parameter of REST end point.
+
+@RestController
+class EmployeeController{
+@GetMapping("/employee/{eid}")
+Employee getEmployee(@PathVariable("eid") Integer empid){
+//code to fetch Employee from DB
+}
+//other REST end points
+}
+@RequestParam — used with method parameter of REST end point. It automatically retrieves a Query parameter into the method parameter of REST end point.
+
+@RestController
+class EmployeeController{
+@GetMapping(“/emp”)
+Employee getEmployee(@RequestParam Integer empid){
+//code to fetch Employee from DB
+}
+//other REST end points
+}
+@RequestHeader — used with method parameter of REST end point. It automatically retrieved value from a specified HTTP header and populates the value into the method parameter.
+
+REST End points are annotated with any of below annotation, to indicate specific HTTP method
+
+@RequestMapping
+@GetMapping — to retrieve one or more resource(such as Employee) details
+@PostMapping — to create a new resource
+@PutMapping — to update an existing resource
+@DeleteMapping — to delete an existing resource
+@RestController
+class EmployeeController{
+@DeleteMapping("/emp")
+Employee removeEmployee(@RequestParam Integer empid){
+//code to delete Employee from DB
+}
+//other REST end points
+}
+REST API Exception Handling annotations:
+
+@ExceptionHandler —method annotated with this annotation, is automatically called whenever a specific Exception(either inbuilt or custom) occurs. This method returns appropriate Exception details to the Client.
+
+@ControllerAdvice — class annotated with this annotation, has methods annotated with @ExceptionHandler
+
+@Valid — used with @RequestBody , to automatically validate the data members during deserialization. This annotation works along with Validation rules such as @NotNull, @Max, etc… used with fields of Entity class
+
+@RestController
+class EmployeeController{
+@PostMapping("/emp")
+Employee createEmployee(@Valid @RequestParam Employee emp){
+//code to create new Employee in DB
+}
+//other REST end points
+}
+Click here to explore my Spring, Spring Boot course with 12 hours Video, with downloadable source code examples
+
+Spring Boot Data JPA related annotations:
+
+@Entity — class which need to be mapped with underlying DB Table
+
+@Table — Used along with @Entity annotated, to specify custom name for DB Table(by default DB Table has same name as Entity Class name)
+
+@Column — Used with Data members of Entity class, to indicate a Column of DB Table.
+
+Data field Validation related — @NotNull, @Max, @Min, @Positive, @Negative, etc…
+
+@Query — to specify Custom Query String(native or JPQL query), along with method declaration in Repository interface.
+
+Entity class relationships — @OnetoOne, @OnetoMany, @ManytoOne, @ManytoMany
+
+Security related Annotations:
+
+@CrossOrigin — Can be used with Class or method(s), indicating by which Origins(domain name or domain name patterns) the REST end points can be invoked.
+
+Below annotations used for method level Security
+
+@Secured
+@PreAuthorize
+@PermitAll
+AOP related Annotations: Aspect Oriented Programming is used to separate Cross Cutting concerns(such as Logging, Security, etc…), from Business Logic. AOP is used only in selected Spring Boot Projects.
+
+@Aspect — to specify that a class is Aspect, which holds Cross cutting concerns
+
+@Pointcut — to specify Pointcut expressions
+
+@Before — to specify a method is Before Advice
+
+@After — to specify a method is After Advice
+
+@Around — to specify a method is around Advice
+
+As known, all advice methods are in an Aspect class.
+
+Caching related Annotations:
+
+@EnableCaching — Used along with @SpringBootApplication, which enables the application to perform Cache related operations
+
+@Cacheable — Adds an entry to the Cache
+
+@CachePut — Updates an existing entry in the Cache
+
+@CacheEvict — Removes one or more entries from the Cache
+
+Scheduling related Annotations: It’s quite common that an Enterprise application may need some functionality to be executed periodically. For such requirements, below Scheduling related Annotations are used
+
+@EnableScheduling — Enables the Application to use Scheduler. This annotation is used along with @SpringBootApplication.
+
+@Scheduled — This annotation is used with a method, which needs to be automatically executed periodically at specific points of time.
+
+Transaction related Annotations:
+
+@Transactional — Used by class/interface or method, indicates the method(s) is executed under a Transaction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Here's a list of commonly used annotations in the Spring Framework and Spring Boot.
+
+Spring Framework Annotations
+@Component: Marks a class as a candidate for auto-detection as a Spring-managed bean. 
+
+@Controller: Marks a class as a controller component in the MVC pattern. 
+
+@Service: Marks a class as a service component in the business layer. 
+
+@Repository: Marks a class as a repository component in the persistence layer. 
+
+@Autowired: Injects dependencies automatically by type. 
+
+@Qualifier: Specifies the specific bean to be autowired when multiple beans of the same type are available. 
+
+@Value: Injects values from properties files or environment variables. 
+
+@Configuration: Indicates that a class declares Spring configuration. @Bean: Marks a method as a provider of beans that should be managed by the Spring container. 
+
+@ComponentScan: Configures component scanning for automatic bean detection. 
+
+@RequestMapping: Maps HTTP requests to specific handler methods. 
+
+@PathVariable: Binds a method parameter to a path variable in a request URL. 
+
+@RequestParam: Binds a method parameter to a query parameter or form data in a request. 
+
+@RequestBody: Binds the body of a request to a method parameter. 
+
+@ResponseBody: Indicates that a method return value should be serialized directly to the HTTP response.
+
+@GetMapping: Used to map HTTP GET requests to specific handler methods in a controller class.
+
+@PostMapping: Used to map HTTP POST requests to specific handler methods in a controller class.
+
+@PutMapping: Used to map HTTP PUT requests to specific handler methods in a controller class.
+
+@DeleteMapping: Used to map HTTP DELETE requests to specific handler methods in a controller class.
+
+@PatchMapping: Used to map HTTP PATCH requests to specific handler methods in a controller class.
+
+@ExceptionHandler: Handles exceptions thrown by controller methods. 
+
+@ResponseStatus: Sets the HTTP response status code for a controller method. 
+
+@Aspect: Declares an aspect, combining advice and pointcuts. 
+
+@Transactional: Specifies that a method (or all methods in a class) should be executed within a transactional context. 
+
+@Async: Enables asynchronous execution of a method. 
+
+Spring Boot Annotations
+@SpringBootApplication: Combines @Configuration, @EnableAutoConfiguration, and @ComponentScan, marking the main class as the entry point for a Spring Boot application.
+
+ @EnableAutoConfiguration: Enables auto-configuration of the Spring application context, based on the classpath and defined dependencies. 
+
+@ConfigurationProperties: Binds and validates externalized configuration properties to a configuration class. 
+
+@ConditionalOnProperty: Configures beans based on the presence or absence of specified properties. 
+
+@ConditionalOnClass: Configures beans based on the presence or absence of specified classes. 
+
+@ConditionalOnBean: Configures beans based on the presence or absence of specified beans. 
+
+@ConditionalOnMissingBean: Configures beans only if the specified beans are not present. 
+
+@ConditionalOnExpression: Configures beans based on a SpEL expression. 
+
+@Conditional: Specifies custom conditions for bean configuration. 
+
+@EnableConfigurationProperties: Enables support for @ConfigurationProperties annotated classes. 
+

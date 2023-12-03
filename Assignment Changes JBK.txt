@@ -1,0 +1,31 @@
+Assignment Changes JBK
+SunDay Task
+
+SpringBoot Assignments Changes
+1. Springboot version page 2 (3001)
+2. No updates (3002)
+3. Page 8 Patch Example (3003)
+4. No updates (3004)
+5. Springboot version page 1 and Page 3 MySQL Version 8 (3005)
+6. @Before Page 3  (3006)
+7. Springboot version page 1 and Page 3 MySQL Version 8 remove the Tomcate Version (3007)
+
+
+
+Hibernate Assignments Changes
+1. No updates (3001)
+2. Page 1 Workbeanch version 8 (3002)
+3. No updates (3003)
+4. No updates (3004)
+
+JSP - Servlet Assignments Changes
+1. No updates (0000)
+2. No updates (1001)
+3. No updates (1002)
+4. No updates (1003)
+5. No updates (1004)
+
+
+
+
+
